@@ -1,7 +1,7 @@
 import unittest
 import warnings
 import os
-from web_server import app, mock_measurements
+from src.web_server import app, mock_measurements
 
 class GreenhouseAppTestCase(unittest.TestCase):
 

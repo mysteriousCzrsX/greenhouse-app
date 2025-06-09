@@ -2,7 +2,8 @@ import unittest
 from datetime import datetime
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from db_ctrl import GreenhouseDB, GreenhouseData, Base  # Assuming your code is in `greenhouse_db.py`
+from src.db_ctrl import Database, Base  # Assuming your code is in `greenhouse_db.py`
+from time import sleep
 
 class GreenhouseDBTest(unittest.TestCase):
     """
@@ -18,7 +19,7 @@ class GreenhouseDBTest(unittest.TestCase):
         self.Session = sessionmaker(bind=self.engine)
 
         # Create a custom DB object using the in-memory engine
-        self.db = GreenhouseDB()
+        self.db = Database()
         self.db.engine = self.engine
         self.db.Session = self.Session
 
@@ -39,10 +40,14 @@ class GreenhouseDBTest(unittest.TestCase):
         Test retrieval of the most recent record.
         """
         self.db.add_data(temperature=20.0, humidity=50.0, co2=400.0, n2=77.0)
+        sleep(1)
         self.db.add_data(temperature=25.0, humidity=55.0, co2=420.0, n2=79.0)
         latest = self.db.get_latest_data()
         self.assertIsNotNone(latest)
         self.assertAlmostEqual(latest.temperature, 25.0)
+        self.assertAlmostEqual(latest.humidity, 55.0)
+        self.assertAlmostEqual(latest.co2, 420.0)
+        self.assertAlmostEqual(latest.n2, 79.0)
 
     def test_empty_database_returns_none(self):
         """

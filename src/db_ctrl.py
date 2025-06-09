@@ -1,8 +1,7 @@
 import os
 from sqlalchemy import create_engine, Column, Integer, Float, DateTime
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from datetime import datetime
+from sqlalchemy.orm import sessionmaker, declarative_base
+from datetime import datetime, timezone
 
 Base = declarative_base()
 
@@ -15,7 +14,7 @@ class GreenhouseData(Base):
     __tablename__ = 'greenhouse_data'
 
     id = Column(Integer, primary_key=True)
-    timestamp = Column(DateTime, default=datetime.now(datetime.UTC))
+    timestamp = Column(DateTime, nullable=False)
     temperature = Column(Float, nullable=False)
     humidity = Column(Float, nullable=False)
     co2 = Column(Float, nullable=False)
@@ -30,7 +29,7 @@ class GreenhouseData(Base):
                 f"temperature={self.temperature}, humidity={self.humidity}, "
                 f"co2={self.co2}, n2={self.n2})>")
 
-class GreenhouseDB:
+class Database:
     """
     @brief Database handler class for greenhouse environmental data.
 
@@ -64,6 +63,7 @@ class GreenhouseDB:
         session = self.Session()
         try:
             data = GreenhouseData(
+                timestamp=datetime.now(timezone.utc),
                 temperature=temperature,
                 humidity=humidity,
                 co2=co2,
