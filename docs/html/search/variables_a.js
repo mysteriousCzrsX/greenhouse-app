@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['n2_0',['n2',['../classdb__ctrl_1_1GreenhouseData.html#afbf916eac75e8110f6f756be90d1f633',1,'db_ctrl::GreenhouseData']]]
+  ['layout_0',['layout',['../namespacesrc_1_1web__server.html#a1afa2551d866746d4f1f51313a583fa3',1,'src::web_server']]]
 ];

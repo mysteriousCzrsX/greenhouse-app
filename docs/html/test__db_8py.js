@@ -1,4 +1,4 @@
 var test__db_8py =
 [
-    [ "test_db.GreenhouseDBTest", "classtest__db_1_1GreenhouseDBTest.html", "classtest__db_1_1GreenhouseDBTest" ]
+    [ "tests.test_db.GreenhouseDBTest", "classtests_1_1test__db_1_1GreenhouseDBTest.html", "classtests_1_1test__db_1_1GreenhouseDBTest" ]
 ];

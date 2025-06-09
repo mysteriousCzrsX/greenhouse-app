@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['web_5fserver_2epy_0',['web_server.py',['../web__server_8py.html',1,'']]],
-  ['web_5fserver_5futs_2epy_1',['web_server_uts.py',['../web__server__uts_8py.html',1,'']]]
+  ['control_5fsystem_2epy_0',['control_system.py',['../control__system_8py.html',1,'']]]
 ];
