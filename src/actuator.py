@@ -1,8 +1,4 @@
-from datetime import datetime
-from typing import List
 from uuid import UUID
-import random
-
 
 class Actuator:
     """
@@ -10,10 +6,9 @@ class Actuator:
     @brief Represents a device controlling a climate parameter.
     """
 
-    def __init__(self, actuatorId: int, actuatorType: str, deviceGuid: UUID, deviceFriendlyName: str):
+    def __init__(self, actuatorId: int, actuatorType: str, deviceFriendlyName: str):
         self.actuatorId = actuatorId
         self.actuatorType = actuatorType
-        self.deviceGuid = deviceGuid
         self.deviceFriendlyName = deviceFriendlyName
 
     def TurnOn(self):

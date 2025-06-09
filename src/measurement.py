@@ -1,7 +1,4 @@
 from datetime import datetime
-from typing import List
-from uuid import UUID
-import random
 
 class Measurement:
     """

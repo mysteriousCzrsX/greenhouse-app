@@ -1,7 +1,6 @@
 from datetime import datetime
-from typing import List
-from uuid import UUID
 import random
+from measurement import Measurement
 
 
 class Sensor:
