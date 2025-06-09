@@ -130,6 +130,8 @@ def GenerateReport():
     """
     @brief Generates a textual report from all historical data and provides a download link.
     """
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    REPORT_PATH = os.path.join(BASE_DIR, "greenhouse_report.txt")
     if not mock_measurements:
         content = "<p>No data available to generate report.</p>"
     else:
@@ -141,7 +143,7 @@ def GenerateReport():
             )
         report_text = "\n".join(report_lines)
 
-        with open("greenhouse_report.txt", "w", encoding="utf-8") as f:
+        with open(REPORT_PATH, "w", encoding="utf-8") as f:
             f.write(report_text)
 
         content = """

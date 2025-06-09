@@ -52,7 +52,9 @@ class GreenhouseAppTestCase(unittest.TestCase):
         """
         response = self.client.get('/report')
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(os.path.exists("greenhouse_report.txt"))
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        REPORT_PATH = os.path.join(BASE_DIR,"..","src","greenhouse_report.txt")
+        self.assertTrue(os.path.exists(REPORT_PATH))
         self.assertIn(b'Download Report', response.data)
 
     def test_download_report_route(self):
