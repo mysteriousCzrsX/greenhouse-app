@@ -4,35 +4,29 @@
 @date 2025
 """
 
-from control_system import Sensor, Actuator, ControlSystem
-from gui_interface import GUIInterface
-from web_server import WebServer
-from uuid import uuid4
+from multiprocessing import Process
+import subprocess
+import time
+
+def run_flask():
+    subprocess.run(["python", "web_server.py"])
+
+def run_gui():
+    subprocess.run(["python", "gui_interface.py"])
+
+def run_control():
+    subprocess.run(["python", "control_system.py"])
 
 if __name__ == "__main__":
-    sensors = [
-        Sensor(1, "Temperature"),
-        Sensor(2, "Humidity")
-    ]
+    flask_process = Process(target=run_flask)
+    flask_process.start()
 
-    actuators = [
-        Actuator(1, "TemperatureController", uuid4(), "Heater"),
-        Actuator(2, "HumidityController", uuid4(), "Humidifier")
-    ]
+    time.sleep(1)  # Give Flask time to start
+    control_process = Process(target=run_control)
+    control_process.start()
+    #gui_process = Process(target=run_gui)
+    #gui_process.start()
 
-    system = ControlSystem(24.0, 50.0, 400.0)
-
-    gui = GUIInterface(system)
-    web = WebServer(system)
-
-    measurements = system.monitorParameters(sensors)
-    system.controlParameters(actuators, measurements)
-
-    gui.DisplayData(measurements)
-    web.DisplayData(measurements)
-
-    system.saveToDatabase(measurements)
-
-    report = system.generateReport(measurements)
-    gui.DisplayReport(report)
-    web.DisplayReport(report)
+    #gui_process.join()
+    control_process.join()
+    flask_process.terminate()

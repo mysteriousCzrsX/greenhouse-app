@@ -1,7 +1,9 @@
-from datetime import datetime
 from typing import List
-from uuid import UUID
-import random
+from measurement import Measurement
+from db_ctrl import Database
+from sensor import Sensor
+from actuator import Actuator
+from time import sleep
 
 class ControlSystem:
     """
@@ -9,11 +11,19 @@ class ControlSystem:
     @brief Controls the greenhouse environment.
     """
 
-    def __init__(self, targetTemperature: float, targetHumidity: float, targetCO2: float):
-        self.targetTemperature = targetTemperature
-        self.targetHumidity = targetHumidity
-        self.targetCO2 = targetCO2
+    def __init__(self):
+        self.targetTemperature = 0
+        self.targetHumidity = 0
+        self.targetCO2 = 0
+        self.targetN2 = 0
         self.database = Database()
+
+    def loop():
+        """
+        @brief Mani control loop
+        """
+        while True:
+            sleep(3)
 
     def monitorParameters(self, sensors: List[Sensor]) -> List[Measurement]:
         """
@@ -40,16 +50,6 @@ class ControlSystem:
                     elif m.value > 30:
                         a.TurnOff()
 
-    def generateReport(self, measurements: List[Measurement]) -> Raport:
-        """
-        @brief Generates a report.
-        @param measurements List of measurements.
-        @return Raport object.
-        """
-        raport = Raport(1, measurements)
-        print(raport.generateRaport())
-        return raport
-
     def saveToDatabase(self, measurements: List[Measurement]):
         """
         @brief Saves all measurements to the database.
@@ -59,3 +59,15 @@ class ControlSystem:
         for m in measurements:
             self.database.SaveMeasurement(m)
         self.database.Disconnect()
+
+    def getTargetValues(self):
+        """
+        @brief Gets the target values from the web server.
+        """
+
+        
+
+
+if __name__ == "__main__":
+    ctrl = ControlSystem()
+    ctrl.loop()
