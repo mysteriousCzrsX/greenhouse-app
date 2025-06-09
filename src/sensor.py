@@ -18,6 +18,6 @@ class Sensor:
         @brief Simulates reading sensor data.
         @return Measurement object.
         """
-        value = random.uniform(15.0, 35.0)
+        value = random.uniform(15.0, 60.0)
         return Measurement(0, self.sensorId, datetime.now(), value, self.sensorType)
 
