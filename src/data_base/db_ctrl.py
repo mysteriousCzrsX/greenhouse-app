@@ -15,7 +15,7 @@ class GreenhouseData(Base):
     __tablename__ = 'greenhouse_data'
 
     id = Column(Integer, primary_key=True)
-    timestamp = Column(DateTime, default=datetime.utcnow)
+    timestamp = Column(DateTime, default=datetime.now(datetime.UTC))
     temperature = Column(Float, nullable=False)
     humidity = Column(Float, nullable=False)
     co2 = Column(Float, nullable=False)
