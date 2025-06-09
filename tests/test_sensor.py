@@ -27,7 +27,7 @@ class TestSensor(unittest.TestCase):
         self.assertEqual(self.sensor.sensorType, self.sensor_type)
 
     @patch('sensor.Measurement', side_effect=Measurement)
-    def test_read_data_returns_measurement(self, mock_measurement):
+    def test_read_data_returns_measurement(self):
         measurement = self.sensor.readData()
         self.assertIsInstance(measurement, Measurement)
         self.assertEqual(measurement.sensorId, self.sensor_id)

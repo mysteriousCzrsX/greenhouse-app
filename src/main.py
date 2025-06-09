@@ -1,7 +1,9 @@
 """
 @file main.py
 @brief Entry point of the greenhouse control application.
-@date 2025
+
+This file runs three separate processes for
+the GUI, web server and hardware control loop.
 """
 
 from multiprocessing import Process
