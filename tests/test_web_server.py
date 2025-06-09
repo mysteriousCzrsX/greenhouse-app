@@ -1,7 +1,7 @@
 import unittest
 import warnings
 import os
-from src.web_server import app, mock_measurements
+from src.web_server import app
 
 class GreenhouseAppTestCase(unittest.TestCase):
 
@@ -35,7 +35,6 @@ class GreenhouseAppTestCase(unittest.TestCase):
         response = self.client.get('/data')
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Measurement Data', response.data)
-        self.assertIn(mock_measurements[0]['timestamp'].encode(), response.data)
 
     def test_get_parameters_route(self):
         """

@@ -11,15 +11,10 @@ HTML documentation generation and ensure maintainability.
 
 from flask import Flask, render_template_string, redirect, url_for, send_file
 import os
+from db_ctrl import Database
 
 app = Flask(__name__)
-
-# === MOCK DATA ===
-mock_measurements = [
-    {"timestamp": "2025-06-01 12:00", "temperature": 24.5, "humidity": 48, "co2": 420, "nitrates": 2.5},
-    {"timestamp": "2025-06-01 13:00", "temperature": 25.1, "humidity": 46, "co2": 430, "nitrates": 2.4},
-    {"timestamp": "2025-06-01 14:00", "temperature": 26.0, "humidity": 45, "co2": 440, "nitrates": 2.3}
-]
+db = Database()
 
 target_parameters = {
     "temperature": 25.0,
@@ -95,14 +90,15 @@ def DisplayData():
             <th>Timestamp</th><th>Temperature (°C)</th><th>Humidity (%)</th><th>CO₂ (ppm)</th><th>Nitrates (mg/L)</th>
         </tr>
     """
-    for entry in mock_measurements:
+    greenhouse_records = db.get_all_data()
+    for entry in greenhouse_records:
         table_html += f"""
         <tr>
-            <td>{entry['timestamp']}</td>
-            <td>{entry['temperature']}</td>
-            <td>{entry['humidity']}</td>
-            <td>{entry['co2']}</td>
-            <td>{entry['nitrates']}</td>
+            <td>{entry.timestamp}</td>
+            <td>{entry.temperature}</td>
+            <td>{entry.humidity}</td>
+            <td>{entry.co2}</td>    
+            <td>{entry.n2}</td>
         </tr>
         """
     table_html += "</table>"
@@ -132,14 +128,15 @@ def GenerateReport():
     """
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     REPORT_PATH = os.path.join(BASE_DIR, "greenhouse_report.txt")
-    if not mock_measurements:
+    greenhouse_records = db.get_all_data()
+    if not greenhouse_records:
         content = "<p>No data available to generate report.</p>"
     else:
         report_lines = ["=== Greenhouse Report ==="]
-        for m in mock_measurements:
+        for m in greenhouse_records:
             report_lines.append(
-                f"Time: {m['timestamp']} | Temp: {m['temperature']} °C | "
-                f"Humidity: {m['humidity']} % | CO₂: {m['co2']} ppm | Nitrates: {m['nitrates']} mg/L"
+                f"Time: {m.timestamp} | Temp: {m.temperature} °C | "
+                f"Humidity: {m.humidity} % | CO₂: {m.co2} ppm | Nitrates: {m.n2} mg/L"
             )
         report_text = "\n".join(report_lines)
 
